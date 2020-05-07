@@ -168,7 +168,7 @@ class Restrict extends CI_Controller{
 			} else {
 				$course_id = $data["course_id"];
 				unset($data["course_id"]);
-				$this->courses_model->update($course_id, $data);
+				$this->courses_model->update( $course_id, $data);
 			}
 		}
 
