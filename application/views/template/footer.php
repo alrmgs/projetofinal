@@ -1,5 +1,5 @@
 <footer>
 	<div class="container text-center">
-		<p>Espaço Aluno by Aléxia Gomes | Template by <a href="http://moozthemes.com"><span>MOOZ</span>Themes.com</a></p>
+		<p>Info Escola by <a href="http://instagram.com/alrmgs"><span>Aléxia Gomes</span></a> | Template by <a href="http://moozthemes.com"><span>MOOZ</span>Themes.com</a></p>
 	</div>
 </footer>
