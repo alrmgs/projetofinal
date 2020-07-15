@@ -3,9 +3,9 @@
     <div class="container">
         <div class="slider-container">
             <div class="intro-text">
-                <div class="intro-lead-in"></div>
-                <div class="intro-heading">Info Escola</div>
-                <a href="<?php echo base_url(); ?>#portfolio" class="page-scroll btn btn-xl">Conheça nossos cursos</a>
+                <div class="intro-lead-in">Aprenda também fora da sala de aula!</div>
+                <div class="intro-heading">Espaço do Aluno</div>
+                <a href="<?php echo base_url(); ?>#course" class="page-scroll btn btn-xl">Conheça nossas novidades</a> !
             </div>
         </div>
     </div>
@@ -94,8 +94,7 @@
                             </div>
                         </div>
                     </div>
-                <?php
-                } // FOREACH
+                <?php } // FOREACH
             } // IF 
             ?>
         </div>
@@ -150,10 +149,9 @@
                             </div>
                         </div>
                     </div>
-                <?php
-                } // FOREACH
-            } // IF 
-            ?>
+    <?php } // FOREACH
+} // IF 
+?>
         </div>
     </div>
 </section>
