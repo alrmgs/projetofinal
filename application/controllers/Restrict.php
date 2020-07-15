@@ -171,6 +171,57 @@ class Restrict extends CI_Controller {
         echo json_encode($json);
     }
 
+    public function ajax_save_feeling() {
+
+        if (!$this->input->is_ajax_request()) {
+            exit("Nenhum acesso de script direto permitido!");
+        }
+
+        $json = array();
+        $json["status"] = 1;
+        $json["error_list"] = array();
+
+        $this->load->model("feelings_model");
+
+        $data = $this->input->post();
+
+        if (empty($data["feeling_name"])) {
+            $json["error_list"]["#feeling_name"] = "Nome do sentimento é obrigatório!";
+        } else {
+            if ($this->feelings_model->is_duplicated("feeling_name", $data["feeling_name"], $data["feeling_id"])) {
+                $json["error_list"]["#feeling_name"] = "Nome de sentimento já existente!";
+            }
+
+
+            if (!empty($json["error_list"])) {
+                $json["status"] = 0;
+            } else {
+
+                if (!empty($data["feeling_img"])) {
+
+                    $file_name = basename($data["feeling_img"]);
+                    $old_path = getcwd() . "/tmp/" . $file_name;
+                    $new_path = getcwd() . "/public/images/feelings/" . $file_name;
+                    rename($old_path, $new_path);
+
+                    $data["course_img"] = "/public/images/feelings/" . $file_name;
+                } else {
+                    unset($data["feeling_img"]);
+                }
+
+                if (empty($data["feeling_id"])) {
+                    $this->feelings_model->insert($data);
+                } else {
+                    $feeling_id = $data["feeling_id"];
+                    unset($data["feeling_id"]);
+                    $this->feelings_model->update($feeling_id, $data);
+                }
+            }
+
+            echo json_encode($json);
+        }
+    }
+
     public function ajax_save_member() {
 
         if (!$this->input->is_ajax_request()) {

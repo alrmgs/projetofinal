@@ -94,7 +94,8 @@
                             </div>
                         </div>
                     </div>
-                <?php } // FOREACH
+                <?php
+                } // FOREACH
             } // IF 
             ?>
         </div>
@@ -149,9 +150,10 @@
                             </div>
                         </div>
                     </div>
-    <?php } // FOREACH
-} // IF 
-?>
+                <?php
+                } // FOREACH
+            } // IF 
+            ?>
         </div>
     </div>
 </section>

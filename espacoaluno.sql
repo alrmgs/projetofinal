@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `alfahelix` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `alfahelix`;
+CREATE DATABASE  IF NOT EXISTS `espacoaluno` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `espacoaluno`;
 -- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
--- Host: localhost    Database: alfahelix
+-- Host: localhost    Database: espacoaluno
 -- ------------------------------------------------------
 -- Server version	5.7.24-0ubuntu0.18.04.1
 
