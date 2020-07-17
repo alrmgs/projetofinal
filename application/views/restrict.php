@@ -37,7 +37,6 @@
               <tr class="tableheader">
                 <th class="dt-center">Nome</th>
                 <th class="dt-center no-sort">Imagem</th>
-                <th class="dt-center">Duração</th>
                 <th class="no-sort">Descrição</th>
                 <th class="dt-center no-sort">Ações</th>
               </tr>
@@ -118,14 +117,6 @@
                 <input type="file" id="btn_upload_course_img" accept="image/*" style="display: none;">
               </label>
               <input id="course_img" name="course_img" hidden>
-              <span class="help-block"></span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-lg-2 control-label">Duração (h)</label>
-            <div class="col-lg-10">
-              <input type="number" step="0.1" id="course_duration" name="course_duration" class="form-control">
               <span class="help-block"></span>
             </div>
           </div>

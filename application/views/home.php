@@ -84,7 +84,6 @@
 
                                 <div class="modal-body">
                                     <img src="<?= base_url() . $course["course_img"] ?>" alt="img01" class="img-responsive center-block" />
-                                    <div class="modal-works"><span>Duração: <?= intval($course["course_duration"]) ?> (h)</span></div>
                                     <p><?= $course["course_description"] ?></p>
                                 </div>
 

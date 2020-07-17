@@ -134,39 +134,27 @@ class Restrict extends CI_Controller {
             }
         }
 
-        $data["course_duration"] = floatval($data["course_duration"]);
-        if (empty($data["course_duration"])) {
-            $json["error_list"]["#course_duration"] = "Duração do curso é obrigatório!";
+
+        if (!empty($data["course_img"])) {
+
+            $file_name = basename($data["course_img"]);
+            $old_path = getcwd() . "/tmp/" . $file_name;
+            $new_path = getcwd() . "/public/images/courses/" . $file_name;
+            rename($old_path, $new_path);
+
+            $data["course_img"] = "/public/images/courses/" . $file_name;
         } else {
-            if (!($data["course_duration"] > 0 && $data["course_duration"] < 100)) {
-                $json["error_list"]["#course_duration"] = "Duração do curso deve ser maior que 0 (h) e menor que 100 (h)!";
-            }
+            unset($data["course_img"]);
         }
 
-        if (!empty($json["error_list"])) {
-            $json["status"] = 0;
+        if (empty($data["course_id"])) {
+            $this->courses_model->insert($data);
         } else {
-
-            if (!empty($data["course_img"])) {
-
-                $file_name = basename($data["course_img"]);
-                $old_path = getcwd() . "/tmp/" . $file_name;
-                $new_path = getcwd() . "/public/images/courses/" . $file_name;
-                rename($old_path, $new_path);
-
-                $data["course_img"] = "/public/images/courses/" . $file_name;
-            } else {
-                unset($data["course_img"]);
-            }
-
-            if (empty($data["course_id"])) {
-                $this->courses_model->insert($data);
-            } else {
-                $course_id = $data["course_id"];
-                unset($data["course_id"]);
-                $this->courses_model->update($course_id, $data);
-            }
+            $course_id = $data["course_id"];
+            unset($data["course_id"]);
+            $this->courses_model->update($course_id, $data);
         }
+
 
         echo json_encode($json);
     }
@@ -303,7 +291,6 @@ class Restrict extends CI_Controller {
         $data = $this->courses_model->get_data($course_id)->result_array()[0];
         $json["input"]["course_id"] = $data["course_id"];
         $json["input"]["course_name"] = $data["course_name"];
-        $json["input"]["course_duration"] = $data["course_duration"];
         $json["input"]["course_description"] = $data["course_description"];
 
         $json["img"]["course_img_path"] = base_url() . $data["course_img"];
@@ -428,7 +415,6 @@ class Restrict extends CI_Controller {
                 $row[] = "";
             }
 
-            $row[] = $course->course_duration;
             $row[] = '<div class="description">' . $course->course_description . '</div>';
 
             $row[] = '<div style="display: inline-block;">
