@@ -159,6 +159,53 @@ class Restrict extends CI_Controller {
         echo json_encode($json);
     }
 
+    public function ajax_save_feeling() {
+
+        if (!$this->input->is_ajax_request()) {
+            exit("Nenhum acesso de script direto permitido!");
+        }
+
+        $json = array();
+        $json["status"] = 1;
+        $json["error_list"] = array();
+
+        $this->load->model("feelings_model");
+
+        $data = $this->input->post();
+
+        if (empty($data["feeling_name"])) {
+            $json["error_list"]["#feeling_name"] = "Nome do sentimento é obrigatório!";
+        } else {
+            if ($this->feelings_model->is_duplicated("feeling_name", $data["feeling_name"], $data["feeling_id"])) {
+                $json["error_list"]["#feeling_name"] = "Nome de sentimento já existente!";
+            }
+        }
+
+
+        if (!empty($data["feeling_img"])) {
+
+            $file_name = basename($data["feeling_img"]);
+            $old_path = getcwd() . "/tmp/" . $file_name;
+            $new_path = getcwd() . "/public/images/feelings/" . $file_name;
+            rename($old_path, $new_path);
+
+            $data["feeling_img"] = "/public/images/feelings/" . $file_name;
+        } else {
+            unset($data["feeling_img"]);
+        }
+
+        if (empty($data["feeling_id"])) {
+            $this->feelings_model->insert($data);
+        } else {
+            $feeling_id = $data["feeling_id"];
+            unset($data["feeling_id"]);
+            $this->feelings_model->update($feeling_id, $data);
+        }
+
+
+        echo json_encode($json);
+    }
+
     public function ajax_save_member() {
 
         if (!$this->input->is_ajax_request()) {
@@ -298,6 +345,29 @@ class Restrict extends CI_Controller {
         echo json_encode($json);
     }
 
+    public function ajax_get_feeling_data() {
+
+        if (!$this->input->is_ajax_request()) {
+            exit("Nenhum acesso de script direto permitido!");
+        }
+
+        $json = array();
+        $json["status"] = 1;
+        $json["input"] = array();
+
+        $this->load->model("feelings_model");
+
+        $feeling_id = $this->input->post("feeling_id");
+        $data = $this->feelings_model->get_data($feeling_id)->result_array()[0];
+        $json["input"]["feeling_id"] = $data["feeling_id"];
+        $json["input"]["feeling_name"] = $data["feeling_name"];
+        $json["input"]["feeling_description"] = $data["feeling_description"];
+
+        $json["img"]["feeling_img_path"] = base_url() . $data["feeling_img"];
+
+        echo json_encode($json);
+    }
+
     public function ajax_get_member_data() {
 
         if (!$this->input->is_ajax_request()) {
@@ -358,6 +428,22 @@ class Restrict extends CI_Controller {
         $this->load->model("courses_model");
         $course_id = $this->input->post("course_id");
         $this->courses_model->delete($course_id);
+
+        echo json_encode($json);
+    }
+
+    public function ajax_delete_feeling_data() {
+
+        if (!$this->input->is_ajax_request()) {
+            exit("Nenhum acesso de script direto permitido!");
+        }
+
+        $json = array();
+        $json["status"] = 1;
+
+        $this->load->model("feelings_model");
+        $feeling_id = $this->input->post("feeling_id");
+        $this->feelings_model->delete($feeling_id);
 
         echo json_encode($json);
     }
@@ -435,6 +521,53 @@ class Restrict extends CI_Controller {
             "draw" => $this->input->post("draw"),
             "recordsTotal" => $this->courses_model->records_total(),
             "recordsFiltered" => $this->courses_model->records_filtered(),
+            "data" => $data,
+        );
+
+        echo json_encode($json);
+    }
+
+    public function ajax_list_feeling() {
+
+        if (!$this->input->is_ajax_request()) {
+            exit("Nenhum acesso de script direto permitido!");
+        }
+
+        $this->load->model("feelings_model");
+        $feelings = $this->feelings_model->get_datatable();
+
+        $data = array();
+        foreach ($feelings as $feeling) {
+
+            $row = array();
+            $row[] = $feeling->feeling_name;
+
+            if ($feeling->feeling_img) {
+                $row[] = '<img src="' . base_url() . $feeling->feeling_img . '" style="max-height: 100px; max-width: 100px;">';
+            } else {
+                $row[] = "";
+            }
+
+            $row[] = '<div class="description">' . $feeling->feeling_description . '</div>';
+
+            $row[] = '<div style="display: inline-block;">
+						<button class="btn btn-primary btn-edit-feeling" 
+							feeling_id="' . $feeling->feeling_id . '">
+							<i class="fa fa-edit"></i>
+						</button>
+						<button class="btn btn-danger btn-del-feeling" 
+							feeling_id="' . $feeling->feeling_id . '">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>';
+
+            $data[] = $row;
+        }
+
+        $json = array(
+            "draw" => $this->input->post("draw"),
+            "recordsTotal" => $this->feelings_model->records_total(),
+            "recordsFiltered" => $this->feelings_model->records_filtered(),
             "data" => $data,
         );
 

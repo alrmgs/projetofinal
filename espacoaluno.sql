@@ -33,6 +33,7 @@ CREATE TABLE `courses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
 --
 -- Dumping data for table `courses`
 --
@@ -41,6 +42,34 @@ LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+--
+-- Table structure for table `feelings`
+--
+
+DROP TABLE IF EXISTS `feelings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `feelings` (
+  `feeling_id` int(11) NOT NULL AUTO_INCREMENT,
+  `feeling_name` varchar(100) NOT NULL,
+  `feeling_img` varchar(100) DEFAULT NULL,
+  `feeling_description` text,
+  PRIMARY KEY (`feeling_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Dumping data for table `feelings`
+--
+
+LOCK TABLES `feelings` WRITE;
+/*!40000 ALTER TABLE `feelings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `feelings` ENABLE KEYS */;
+UNLOCK TABLES;
+
 
 --
 -- Table structure for table `team`

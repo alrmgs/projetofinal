@@ -63,6 +63,9 @@
                             <a class="page-scroll" href="<?php echo base_url(); ?>#course">Cursos</a>
                         </li>
                         <li>
+                            <a class="page-scroll" href="<?php echo base_url(); ?>#feeling">Sentimentos</a>
+                        </li>
+                        <li>
                             <a class="page-scroll" href="<?php echo base_url(); ?>#team">Equipe</a>
                         </li>
                         <li>

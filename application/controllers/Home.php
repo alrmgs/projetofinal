@@ -8,6 +8,9 @@ class Home extends CI_Controller {
 
         $this->load->model("courses_model");
         $courses = $this->courses_model->show_courses();
+        
+        $this->load->model("feelings_model");
+        $feelings = $this->feelings_model->show_feelings();
 
         $this->load->model("team_model");
         $team = $this->team_model->show_team();
@@ -18,6 +21,7 @@ class Home extends CI_Controller {
                 "theme-scripts.js"
             ),
             "courses" => $courses,
+            "feelings" => $feelings,
             "team" => $team
         );
         $this->template->show("home.php", $data);
