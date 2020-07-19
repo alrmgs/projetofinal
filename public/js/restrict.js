@@ -82,7 +82,7 @@ $(function () {
                 if (response["status"]) {
                     $("#modal_feeling").modal("hide");
                     swal("Sucesso!", "Salvo com sucesso!", "success");
-                    dt_course.ajax.reload();
+                    dt_feeling.ajax.reload();
                 } else {
                     showErrorsModal(response["error_list"])
                 }
@@ -275,7 +275,7 @@ $(function () {
                         data: {"feeling_id": feeling_id.attr("feeling_id")},
                         success: function (response) {
                             swal("Sucesso!", "Ação executada com sucesso", "success");
-                            dt_course.ajax.reload();
+                            dt_feeling.ajax.reload();
                         }
                     })
                 }
